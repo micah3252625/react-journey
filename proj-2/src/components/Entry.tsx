@@ -1,4 +1,5 @@
 import LocationPin from "../assets/location-pin.png";
+
 interface ImageProps {
   src: string;
   alt: string;
@@ -10,36 +11,45 @@ interface EntryProps {
     img: ImageProps;
     title: string;
     country: string;
+    googleMapsLink: string,
     dates: string;
     text: string;
   };
 }
 
 const Entry: React.FC<EntryProps> = ({ entries }) => {
-  const { img, title, country, text, dates } = entries;
+  const { img, title, country, googleMapsLink, text, dates } = entries;
   return (
-    <article className="entry flex">
-      <div className="img-container">
-        <img src={img.src} alt={img.alt} width={150} />
+    <article className="entry my-3 flex flex-wrap items-center md:flex-nowrap gap-6">
+      <div className="w-[225px] h-[225px]  overflow-hidden rounded-sm flex-shrink-0">
+        <img
+          src={img.src}
+          alt={img.alt}
+          className="object-cover w-full h-full"
+        />
       </div>
-      <div className="info-container">
-        <h1 className="title text-5xl">{title}</h1>
-        <div className="location flex gap-3">
-          <div className="flex">
-            <img
-              src={LocationPin}
-              alt="location-pin"
-              className=" h-auto"
-              width={25} height={25}
-            />
-            <p className="country">{country}</p>
-          </div>
-          <a href="">View on Google Maps</a>
+      <div className="info-containeritems-center">
+        <h1 className="title text-3xl font-bold mb-2">{title}</h1>
+        <div className="location flex items-center gap-2 text-sm text-gray-600 mb-2">
+          <img
+            src={LocationPin}
+            alt="location-pin"
+            className="w-4 h-4"
+          />
+          <span>{country}</span>
+          <a
+            href={`${googleMapsLink}`}
+            className="text-blue-500 underline ml-2"
+            aria-label={`View ${title} on Google Maps`}
+          >
+            View on Google Maps
+          </a>
         </div>
-        <p className="dates">{dates}</p>
-        <p className="text">{text}</p>
+        <p className="dates text-gray-500 mb-3">{dates}</p>
+        <p className="text leading-relaxed">{text}</p>
       </div>
     </article>
+
   );
 };
 
